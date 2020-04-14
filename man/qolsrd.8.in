@@ -1,0 +1,160 @@
+\" -*- mode: nroff; -*-
+\" Copyright (C) 2003-2006 Laboratoire de Recherche en Informatique
+\"
+\" This file is part of Qolyester.
+\"
+\" Qolyester is free software; you can redistribute it and/or
+\" modify it under the terms of the GNU General Public License
+\" as published by the Free Software Foundation; either version 2
+\" of the License, or (at your option) any later version.
+\"
+\" Qolyester is distributed in the hope that it will be useful,
+\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+\" GNU General Public License for more details.
+
+\" You should have received a copy of the GNU General Public License
+\" along with this program; if not, write to the Free Software
+\" Foundation, Inc., 51 Franklin Street, Fifth Floor,
+\" Boston, MA  02110-1301, USA.
+
+.TH qolsrd 1 "June 2004" Linux
+.SH NAME
+qolsrd \- Qolyester
+.SM OLSR
+daemon @virtual_version@
+.SH SYNOPSIS
+.B qolsrd -i \fIinterface\fR[,...] [\fIOPTION\fR]...
+.SH DESCRIPTION
+.B qolsrd
+is the Qolyester daemon.  Qolyester is an implementation of the
+Optimized Link-State Routing (\f(SMOLSR\fR) protocol for mobile ad hoc
+networks.@virtual_description@
+.SH OPTIONS
+@man_mid1@
+@man_hna1@
+.TP
+\fB-w\fR, \fB--willingness=WILL\fR
+Set the initial willingness to become a MPR.  \fBWILL\fR must be an integer
+between 0 (never) and 7 (always) or one of the following keywords:
+\fBnever\fR, \fBlow\fR, \fBdefault\fR, \fBhigh\fR, \fBalways\fR.  The
+default willingness is 3.
+@man_tcred@
+@man_mprred@
+.TP
+\fB-S\fR, \fB--syslog\fR
+Use syslog for messages by default (when using -n)
+.TP
+\fB-T\fR, \fB--timestamps\fR
+Print timestamps at each message line.
+.TP
+\fB-v\fR, \fB--verbose\fR
+Print various debugging messages.  Each additional \fB-v\fR increase
+verbosity level.
+@man_virtual1@
+.TP
+\fB--hello-interval=MSEC\fR
+Set the HELLO emission interval to \fBMSEC\fR milliseconds.
+.TP
+\fB--refersh-interval=MSEC\fR
+Set the refresh interval to \fBMSEC\fR milliseconds.
+.TP
+\fB--tc-interval=MSEC\fR
+Set the TC emission interval to \fBMSEC\fR milliseconds.
+@man_mid2@
+@man_hna2@
+@man_mid3@
+@man_hna3@
+.TP
+\fB--neighb-hold-time=MSEC\fR
+Set the neighbor holding time to \fBMSEC\fR milliseconds.
+.TP
+\fB--top-hold-time=MSEC\fR
+Set the topology holding time to \fBMSEC\fR milliseconds.
+.TP
+\fB--dup-hold-time=MSEC\fR
+Set the duplicates holding time to \fBMSEC\fR milliseconds.
+.TP
+\fB--max-jitter-time=MSEC\fR
+Set the maximum jitter time to \fBMSEC\fR milliseconds.
+@man_linkhys@
+.TP
+\fB--error-file=FILE\fR
+Set the file to which error messages are to be written.  By default,
+error messages are printed on stderr.
+.TP
+\fB--warning-file=FILE\fR
+Set the file to which warning messages are to be written.  By default,
+warning messages are printed on stderr.
+.TP
+\fB--notice-file=FILE\fR
+Set the file to which notice messages are to be written.  By default,
+notice messages are printed on stderr.
+.TP
+\fB--dump-file=FILE\fR
+Set the file to which debugging/illustrative dumps are written.  By
+default, dumps are printed on stderr.
+.TP
+\fB--all-file=FILE\fR
+Set the default file to which all dumps are written.  Other
+\fB--*-file\fR options override this.
+.TP
+\fB-h\fR, \fB--help\fR
+Print brief usage instructions on stderr.
+.TP
+\fB-n\fR, \fB--no-detach\fR
+Prevents the daemon from detaching from the control terminal.  This is
+provided for debugging purposes.
+@man_tables@
+.TP
+\fB--version\fR
+Print current version information on stderr and exit.
+.TP
+\fB--dump-hello\fR
+Dump contents of sent and received HELLO messages.
+.TP
+\fB--dump-tc\fR
+Dump contents of sent and received TC messages.
+@man_mid4@
+@man_hna4@
+.TP
+\fB--dump-all\fR
+Dump contents of all sent and known received messages.
+.TP
+\fB--dump-state\fR
+Dump the internal state every second.
+.TP
+\fB--dump-prof\fR
+Prints the time in seconds spent in each event loop.
+.TP
+\fB--debug-trace=FILE\fR
+Activates all the options required to produce a trace file used for bug
+reporting.
+@man_dirtypromischack@
+.TP
+\fB--dump-interval=MSEC\fR
+Sets the state dump interval to \fBMSEC\fR milliseconds.
+.TP
+\fB--queue-size=N\fR
+Sets the sending queue size per interface to \fBN\fR packets.
+.SH BUGS
+There are certainly lots of bugs left.  Please let me know.
+.sp
+Qolyester only runs on Linux kernel 2.4 series for the moment, porting
+to *BSD is not my primary concern, but any external help in this
+direction is welcome.
+.SH AUTHOR
+Written by Ignacy Gawedzki <ig@lri.fr>.
+.SH COPYRIGHT
+Copyright (C) 2003, 2004, 2005 Laboratoire de Recherche en Informatique.
+.br
+This is free software; see the source for copying conditions.  There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+.SH SEE ALSO
+As of version 0.1, Qolyester conforms to the \f(SMOLSR\fR \f(SMIETF\fR
+RFC 3626 which can be found at
+.BR http://www.ietf.org/rfc/rfc3626.txt
+'br
+\&.
+@man_virtual2@

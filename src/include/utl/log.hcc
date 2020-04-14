@@ -1,0 +1,55 @@
+// Copyright (C) 2003, 2004, 2005 Laboratoire de Recherche en Informatique
+
+// This file is part of Qolyester.
+
+// Qolyester is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+
+// Qolyester is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+#ifndef QOLYESTER_UTL_LOG_HCC
+# define QOLYESTER_UTL_LOG_HCC 1
+
+# include "config.hh"
+# include "utl/log.hh"
+
+namespace olsr {
+
+  extern unsigned	current_log_level;
+
+# define SPB	StringPrefixBuf
+# define SP	StringPrefixer
+
+# define DEFLOG(Name, Level, Prefix)				\
+  std::ostream	Name (new LevelBuf( Level ,			\
+				    new SPB (std::cerr.rdbuf(),	\
+					     SP ( Prefix ))));
+
+  DEFLOG(error, 0, "ERROR: ");
+  DEFLOG(warning, 1, "WARNING: ");
+  DEFLOG(notice, 2, "NOTICE: ");
+
+# undef DEFLOG
+# undef SP
+# undef SPB
+
+  std::ostream  dump(new LevelBuf(3, std::cerr.rdbuf()));
+
+# ifdef DEBUG
+  debug_ostream_t       debug(new LevelBuf(5, std::cerr.rdbuf()));
+# else // !DEBUG
+  debug_ostream_t       debug(new DummyBuf);
+# endif
+
+} // namespace olsr
+
+#endif // !QOLYESTER_UTL_LOG_HCC

@@ -1,0 +1,3 @@
+.TP
+\fB--hna-interval=MSEC\fR
+Set the HNA emission interval to \fBMSEC\fR milliseconds.

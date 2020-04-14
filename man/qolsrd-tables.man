@@ -1,0 +1,4 @@
+.TP
+\fB--no-tables\fR
+Prevents the daemon from modifying the routing tables.  This is
+provided for testing purposes.

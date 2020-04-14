@@ -1,0 +1,132 @@
+// Copyright (C) 2003, 2004, 2005 Laboratoire de Recherche en Informatique
+                                                                               
+// This file is part of Qolyester.
+                                                                               
+// Qolyester is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+                                                                               
+// Qolyester is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+                                                                               
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+#ifndef QOLYESTER_DAEMON_STATIC_MEMBERS_INIT_HCC
+# define QOLYESTER_DAEMON_STATIC_MEMBERS_INIT_HCC 1
+
+namespace olsr {
+
+  namespace gra {
+
+# ifdef QOLYESTER_DAEMON_GRA_GRAPH_HH
+
+    AdjInfo	AdjInfo::_dummy_for_find;
+    AdjNode	AdjNode::_dummy_for_find;
+
+# endif
+
+  } // namespace gra
+
+  namespace msg {
+
+# ifdef QOLYESTER_DAEMON_MSG_MESSAGE_HH
+
+    utl::Seqnum<u_int16_t>	Message::seqnum;
+
+# endif
+
+  } // namespace msg
+
+  namespace net {
+
+# ifdef QOLYESTER_DAEMON_NET_REALINTERFACE_HH
+
+    RealInterface	RealInterface::dummy_for_find_;
+
+# endif
+
+# ifdef QOLYESTER_DAEMON_NET_VIRTUALINTERFACE_HH
+
+    VirtualInterface	VirtualInterface::dummy_for_find_;
+
+# endif
+
+# ifdef QOLYESTER_DAEMON_NET_ROUTE_HH
+
+    LocalRoute	LocalRoute::_dummy_for_find;
+    RemoteRoute	RemoteRoute::_dummy_for_find;
+
+# endif
+
+  } // namespace net
+
+  namespace set {
+
+# ifdef QOLYESTER_DAEMON_SET_DUPLICATE_HH
+
+    DuplicateEntry	DuplicateEntry::dummy_for_find_;
+
+# endif
+
+# ifdef QOLYESTER_DAEMON_SET_HNA_HH
+
+    HNAEntry	HNAEntry::dummy_for_find_;
+
+# endif
+
+# ifdef QOLYESTER_DAEMON_SET_MID_HH
+
+    MIDEntry	MIDEntry::dummy_for_find_;
+
+# endif
+
+# ifdef QOLYESTER_DAEMON_SET_NEIGHBORS_HH
+
+    Link		Link::dummy_for_find_;
+    Neighbor		Neighbor::dummy_for_find_;
+    TwoHopNeighbor	TwoHopNeighbor::dummy_for_find_;
+
+# endif
+
+# ifdef QOLYESTER_DAEMON_SET_TOPOLOGY_HH
+
+    TopologyEntry	TopologyEntry::dummy_for_find_;
+
+# endif
+
+  } // namespace set
+
+  namespace sys {
+
+    namespace internal {
+
+# ifdef QOLYESTER_DAEMON_SYS_LINUX_INTERFACEDESC_HH
+
+      InterfaceAddress	InterfaceAddress::_dummy_for_find;
+
+# endif
+
+# ifdef QOLYESTER_DAEMON_SYS_VIRTUAL_INTERFACEDESC_HH
+
+      InterfaceAddress	InterfaceAddress::_dummy_for_find;
+
+# endif
+
+    } // namespace internal
+
+# ifdef QOLYESTER_DAEMON_SYS_SOCKET_HH
+
+    Socket	Socket::_dummy(Socket::_dummy_val);
+    
+# endif
+
+  } // namespace sys
+
+} // namespace olsr
+
+#endif // !QOLYESTER_DAEMON_STATIC_MEMBERS_INIT_HCC

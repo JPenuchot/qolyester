@@ -1,0 +1,5 @@
+.TP
+\fB-t\fR, \fB--tc-redundancy=REDUNDANCY\fR
+Set the TC message redundancy.  \fBREDUNDANCY\fR must be one of the
+following keywords: \fBmprsel\fR, \fBmprsel+mpr\fR or \fBsymset\fR.
+The default is \fBmprsel\fR.

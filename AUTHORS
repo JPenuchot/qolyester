@@ -1,0 +1,8 @@
+The preliminary version of Qolyester is written by Ignacy Gawedzki <ig@lri.fr>
+based on the 11th version of the draft of the OLSR protocol.
+
+Future versions are planned to include QoS support based on the works
+of Khaldoun Al Agha <alagha@lri.fr>, Anelise Munaretto Fonseca
+<anelise@lri.fr> and Hakim Badis <badis@lri.fr>.
+
+Please send any questions regarding Qolyester to qolsr@lri.fr.

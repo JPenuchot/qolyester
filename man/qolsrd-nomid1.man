@@ -1,0 +1,5 @@
+.TP
+\fB-i\fR, \fB--interfaces=NAME[=ADDR]\fR
+Specify the network interface to take part in the OLSR network.  One
+network interface must be specified.  Additionally, the address to use
+can be specified, but it must be set beforehand.

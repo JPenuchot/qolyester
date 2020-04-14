@@ -1,0 +1,19 @@
+* Fix bugs. =)
+
+* Finish commenting the code (yes, shame on me again).
+
+* Implement <put your favorite option here>.
+
+* Implement funky QoS support: this is the main purpose of this
+  project (actually this is the Q in Qolyester).  We are currently
+  doing it on an internal branch of the project and intend to release
+  it when usable (this might be some long time).
+
+* Finish enabling optional feature disabling by autoconf switches.
+
+* Implement a real, pluggable, DOT file parser for the switch.
+
+* Find a good way to deal with potentially conflicting routes existing when
+  Qolyester starts.
+
+* Use the boost C++ library to implement most of the ugly stuff.

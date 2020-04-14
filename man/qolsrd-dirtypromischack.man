@@ -1,0 +1,4 @@
+.TP
+\fB--dirty-promisc-hack\fR
+Enables and disables promiscuous mode on interfaces to make cards with
+buggy firmwares receive multicast packets.

@@ -1,0 +1,4 @@
+.TP
+\fB-m\fR, \fB--mpr-coverage=COVERAGE\fR
+Set the MPR coverage.  \fBCOVERAGE\fR must be a positive non-null integer.
+The default is 1.

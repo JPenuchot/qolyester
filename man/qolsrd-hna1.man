@@ -1,0 +1,5 @@
+.TP
+\fB-o\fR, \fB--other-networks=ADDRESS/PREFIX\fR,...
+Declare the list of external networks to be announced to the 
+.SM OLSR
+network.

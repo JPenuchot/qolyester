@@ -1,0 +1,1500 @@
+2009-03-02  Ignacy Gawedzki  <ig@lri.fr>
+
+	Various syntax fixes to avoid additional warnings by GCC 4.3.
+
+	* src/daemon/set/neighbors.hxx: Fixed possible race condition in
+	CoherenceProxy::unset_mprsel().
+
+2009-02-12  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/set/neighbors.hxx: Fixed loop in
+	CoherenceProxy::remove_interface().
+
+2008-10-23  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/msg/message.hxx: Added debug message for unknown
+	message types.
+
+2008-06-13  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/sys/unixsocket.hxx (olsr): Throw proper exception
+	upon ECONNRESET error when receiving.
+
+2008-05-23  Ignacy Gawedzki  <ig@lri.fr>
+
+	* Makefile.am: Add bootstrap to EXTRA_DIST, so that it makes it to
+	the snapshots.
+
+	* bootstrap: Run src/tests/sanity/generate.sh with bash instead of
+	sh, since the latter may not be actually bash.
+
+	* configure.ac: Changed the test code for STL to make it
+	compatible with GCC 4.2 (three template parameters for STL
+	containers and not simply one).
+
+	* src/include/utl/set.hh (olsr): Added a third template parameter
+	for the Cont template parameter of Index, to make it work with
+	the more-standard-compliant GCC 4.2.
+
+2008-03-17  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/net/ipv4.hh, src/include/net/ipv6.hh: Fixed buggy
+	netmask computing code.
+
+2008-03-14  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sys/linux/interfaceconfig.hh: Do not set/reset
+	ipv4/all/forwarding, but rather use interface-specific
+	configuration, since the global key sets/resets all the
+	interfaces' local settings.
+
+2007-09-10  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/alg/mprselection.hxx: Added update of coverage map
+	upon removal of an MPR in the optimization step.  Optimized the
+	construction of lthns and the maintenance of rthns.
+
+2007-08-28  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/alg/mprselection.hxx: Added update of reachability
+	map upon addition of a neighbor into the local MPR set.  This
+	should make MPR selection more accurate (and compliant to the RFC).
+
+2006-10-05  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sys/linux/interfaceconfig.hh: Set forwarding for IPv4
+	on all interfaces and not only the one on the ad hoc network.
+
+	* src/daemon/utl/args.hxx: Check whether the hysteresis thresholds
+	are consistent.
+
+2006-10-04  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/utl/timeval.hxx: Fixed TimeVal::operator*(double)
+	which was simply not correct.
+	* src/daemon/set/neighbors.hxx: Set the nexttime field of links
+	in CoherenceProxy::insert_link().
+
+2006-09-04  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/alg/routingtable.hxx: Add nodes to local_map anyway
+	(reverted last changes).
+
+	* src/daemon/set/neighbors.hxx: CoherenceProxy::update_graph():
+	set weight to 0 if willingness is WILL_NEVER, regardless of
+	whether the node is an MPR-selector or not.  This forbids routing
+	through these nodes in Dijkstra.
+
+2006-09-03  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/alg/routingtable.hxx: Do not add a 1-hop neighbor to
+	local_map if it has willingness WILL_NEVER.  It should not serve
+	as a router.
+
+	* src/daemon/set/neighbors.hxx: In CoherenceProxy::update_graph()
+	the 1-hop node has to be added to path_net regardless of its
+	willingness and removed from it as soon as it is not symmetric
+	anymore.  Besides, the weight should be augmented not because a
+	node is an MPR, but an MPR-selector (to make Dijkstra prefer going
+	through MPR-selectors in case of ties, c.f. RFC 3626 section 10,
+	point 3.2).
+
+2006-06-16  Ignacy Gawedzki  <ig@lri.fr>
+
+	In all situations where a ostream << "x" was performed, put a
+	ostream << 'x' instead.
+
+	* src/include/net/ipv4.hh: Put a few constructor calls in
+	constructors, instead of assignments.
+
+	* configure.ac: Provided roundf, floorf and ceilf replacements
+	inline functions.
+
+2006-06-15  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/msg/hello.hxx: Changed a few "." into '.'.
+
+2006-02-20  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/sch/scheduler.hxx: Added forgotten "down" manipulators.
+	* src/daemon/main.cc: Same here.
+
+2006-02-10  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/sch/scheduler.hxx: Added event addresses in log.
+
+	Added "down" manipulators each time an "up" is used.  Removed
+	resetting of level in basic::levelbuf::sync().
+
+2006-02-08  Ignacy Gawedzki  <ig@lri.fr>
+
+	* configure.ac: Added support for a configurable HELLO interval
+	grace (how much of the advertised HTime will be tolerated between
+	two HELLOs without decreasing link quality).  Added also support
+	for configurable link hysteresis parameters (hyst-threshold-high,
+	hyst-threshold-low, hyst-scaling).
+	* src/daemon/utl/args.hxx: Likewise.
+	* src/daemon/cst/params.hh: Likewise.
+	* src/daemon/cst/params.hcc: Likewise.
+	* src/daemon/set/neighbors.hh: Likewise.
+	* src/daemon/set/neighbors.hxx: Likewise.
+	* src/include/cst/constants.hh: Likewise.
+	* man/qolsrd.8.in: Added conditional documentation of new
+	options.
+	* man/qolsrd-linkhys.man: New. Added documentation of link
+	hysteresis-specific options.
+
+	* src/daemon/sys/linux/routingsocket.hxx: Fixed logging of
+	output interface in print_kernel_routes.
+
+2006-02-07  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/main.cc (main): Added handling of
+	std::ofstream::failure exceptions (a bit obfuscated though).
+
+	* src/daemon/utl/args.hxx: Added start_output() and stop_output()
+	functions to enable and disable exception throwing in iostreams.
+
+	* src/include/utl/log.hh: Avoid calling other_->pubsync() in
+	levelbuf if level not sufficient.
+
+	* src/daemon/main.cc (main): Put goodbye phrase inside the
+	try/catch block, in order to catch the exception when it fails.
+
+	* src/daemon/alg/dijkstra.hh: Added a typedef for the type of
+	sources_map.
+
+	* src/daemon/alg/routingtable.hxx: Changed local_map to be a map
+	of "neighbor address" -> pair("interface address", "neighbor
+	iterator").  Add an entry into the map for every local route
+	inserted, to avoid ending up with both a local and a remote route
+	to a neighbor's interface (in the case the MID has not made its
+	way to the current node yet).
+
+	* src/daemon/alg/routingtable.hh: Added inclusion of dijkstra.hh.
+
+	* src/daemon/alg/dijkstra.hxx: Adapted the code to work with the
+	new sources_map.
+
+2006-02-03  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/utl/args.hxx: Added --queue-size doc in usage and manpage.
+
+	* src/daemon/sys/socket.hxx: Added IPTOS_LOWDELAY option for
+	IPv4.  Still don't know how to do the same with IPv6.
+
+2006-01-24  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/set/neighbors.hxx: Fixed bug in new_weight
+	computation in CoherenceProxy::update_graph.
+
+2006-01-19  Ignacy Gawedzki  <ig@lri.fr>
+
+	* configure.ac: Added hash_multiset and hash_multimap import in
+	std namespace in AH_BOTTOM.
+
+	* src/tests/sanity/generate.sh: Added generation of copyright notice.
+
+2006-01-18  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/set/neighbors.hxx: Log link details (local, remote)
+	in link quality change methods.
+
+	* src/daemon/msg/hello.hxx: Cosmetic log changes.
+
+	* src/switch/sch/events.hxx: Log byte count in PacketReceiver.
+
+	* src/include/sys/linux/netlink.hxx: Factorized some code in
+	macros for visitor method bodies.  Used macros for the purpose of
+	composing Netlink messages (instead of praying for field alignment
+	in structures to stay always the same).
+
+	* src/daemon/sch/events.hxx: Cosmetic changes in StatePrinter.
+
+2006-01-13  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/set/interfaces.hxx: Fixed silly #ifndef NDEBUG.
+
+2005-12-16  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/switch/prs/visitor.hh, src/switch/prs/data.hh: Got rid of
+	data_fwd.hh with predeclarations in visitor.hh.
+
+	* src/switch/main.cc: Explicitly instanciated TagAttrStmt<...>
+	constructors to have them included in the object file.
+
+	Removed useless empty directories from src/switch/ .
+
+	Added "inline" keywords to all method and function declarations
+	which implementation is in a .hxx file.  Removed the
+	QOLYESTER_DONTINCLUDE_HXX dirty hack.
+
+	* src/tests/sanity/generate.sh: Replaced -DHEADER='<...>' with
+	-include '...' to avoid interference between paths and macros
+	(e.g. #include <.../linux/...> becoming #include <.../1/...>
+	because "linux" is #define'd by default).
+
+	* src/tests/sanity/base.cc: Removed the include line.  Now this
+	file is empty.
+
+	* src/switch/utl/args.hxx: Removed remaining references to
+	dump_state or do_dump_state or ARG_ thereof.
+
+2005-12-13  Ignacy Gawedzki  <ig@lri.fr>
+
+	Manually merged log management comments into the switch version of
+	args.hxx.
+
+	* src/daemon/utl/args.hxx: Partially commented the log management
+	system.
+
+	* src/daemon/utl/args.hh: Changed initial debugtrace_log_level
+	from 1000 to std::numeric_limits<unsigned>::max().
+
+	* src/include/sys/linux/netlink.hh: Remove inclusion of <string.h>
+	and added inclusion of <string>
+
+	* src/include/sys/linux/netlink.hxx: Added inclusion of <cstring>
+
+2005-12-09  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/gra/graph.hh: Changed std::hash<gra::AdjInfo> to
+	compute a XOR on endpoints' addresses instead of an addition.
+
+2005-12-08  Ignacy Gawedzki  <ig@lri.fr>
+
+	* README: Changed "HAVE TO" to "MUST" and added some advice about
+	using RTS/CTS in Wifi.
+
+	* src/tests/sanity/generate.sh: Changed recursive browsing code,
+	to make it work in bash.
+
+	* src/daemon/sys/linux/routingsocket.hxx: Added logging of table
+	in RoutingTableVisitor::visit(const NLNewRoute&).
+
+2005-12-07  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sch/events.hxx: Changed StatePrinter::handle() to
+	show in "Links { ... }" what is actually advertised in HELLOs
+	(i.e. "L" when a link's losttime timer has not expired, instead of
+	looking at the symtime and asymtime only).
+
+2005-12-02  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/net/virtualinterface.hxx: Forgot to set sender_ to 0
+	in erase_event().
+
+2005-11-22  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/tests/sanity/generate.sh: Added dirty hack to enable using
+	no default CXXFLAGS for make check.  This is done via overriding
+	CXXFLAGS in src/tests/sanity/Makefile.am and turning off the
+	warning using "AUTOMAKE_OPTIONS = -Wno-gnu".  There is certainly a
+	better way to do this, maybe using some handcrafted M4 macros.
+
+2005-11-21  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/cst/params.*, src/daemon/utl/args.hxx: Added option
+	--queue-size to adjust output queue size at run time.
+
+	* configure.ac: Tidied up things a bit (removed gc-interval
+	option).  Added option for default output queue size.
+
+	Added a whole bunch of includes and declarations to make "make
+	check" work.
+
+2005-11-20  Ignacy Gawedzki  <ig@lri.fr>
+
+	Changed a bit the way PacketSenders are managed.  To avoid having
+	several PacketSenders for the same interface in the IOEvent queue
+	of the scheduler, we have at most one PacketSender per interface
+	and each PacketSender has a queue of outgoing packets to be sent.
+	Now set::Interfaces::send_messages doesn't insert PacketSenders
+	into the scheduler directly, but calls Interface::shipout instead.
+
+	* src/include/sch/scheduler.hxx: Added maps to ensure only one
+	IOEvent per (fd, events) is activated, to avoid blocking.
+
+2005-11-19  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/sch/scheduler.hxx: Added dumping of error if poll()
+	fails, before the assertion check.
+
+	* src/include/sys/linux/netlink.hxx: Added a dirty workaround for
+	a bug in pre-2.6.13 Linux kernels.  Netlink responses to a
+	RTM_GET* should usually have NLM_F_MULTI flag since we are always
+	requesting an NLM_F_ROOT dump, so we do as though the response is
+	multipart as soon as we recognise the message type.  This should
+	clearly not remain if sys::netlink::Netlink is used for anything
+	else than whole dumping.
+
+	* src/daemon/sys/linux/routingsocket.hxx: Removed the second
+	receive after a GETROUTE request in
+	RoutingSocket::print_kernel_routes() and
+	RoutingSocket::remove_old_routes().  It was put there after
+	empirical tests and the reason why it was useful was the bug
+	described above.
+
+	* configure.ac: Do really add two socket support for IPv4.  This
+	was supposed to be the case for some earlier version (see below),
+	but I suppose it has not been changed in configure.ac but in
+	config.hh.in directly (that file gets regenerated automatically at
+	configure time).
+
+2005-11-15  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/set/neighbors.hh, src/daemon/set/neighbors.hxx: Added
+	the was_sym_ attribute to Link, along with was_sym() and
+	set_was_sym(bool) methods, in order to be able to detect that a
+	link's state has changed from asymmetric to symmetric and
+	vice-versa.  A check in cproxy_t::update_state() has been added to
+	trigger routes recalculation if any node's link has changed
+	symmetric status.  This should fix the bug when using multiple
+	interfaces and only one link out of many to a neighbor changes
+	state: now routes should be recalculated right.
+
+	* src/daemon/alg/routingtable.hxx: Consider links to 1-hop
+	neighbors for addition in routing table only if they are
+	symmetric.  Also use the main address of neighbor in local_map
+	(to be used by alg::dijkstra) if possible, otherwise use the
+	remote address of any symmetric link to that node.
+
+	* src/daemon/alg/dijkstra.hxx: Simplified last step of remote
+	routes construction: next_map's values should *always* be keys in
+	sources_map; added an assert to ensure that this is the case.
+	Replaced a call to op[] on a map with direct iterator
+	dereferencing in a debug output.
+
+	Added support in switch for "lifebegin" and "lifeend" link
+	properties, to enable lifetime limitation of links (to simulate
+	link apparition and loss).  Also added support for multiple arcs
+	in topology description files (.dot) to allow several lifetimes
+	(use with caution, overlapping lifetimes will result in duplicated
+	packets).
+
+2005-11-10  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/msg/hello.hxx: Do not add entry in the 2-hop neighbor
+	table if the 2-hop neighbor's main address is the main address of
+	the current node.  This avoids ending up with a node with a route
+	to itself through a 1-hop neighbor.
+
+2005-11-09  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/set/interfaces.hxx: In InterfaceSet::insert(), add
+	key to _mid_iset before inserting to _iset, in order to avoid
+	ending up with duplicate elements in indices.
+
+	* src/daemon/msg/hello.hxx: Fixed a bug in multiple interfaces
+	mode when a link get stamped during link iteration (iterator
+	consistency).
+
+2005-11-04  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/switch/utl/args.hxx, src/daemon/utl/args.hxx: Fixed command
+	line include in trace file.
+
+	* src/daemon/main.cc (main): Fixed a bug that made some interface
+	information output on incorrect verbosity level.
+
+2005-09-30  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/tests/sanity/generate.sh: Fixed the $(top_srcdir) issue, so
+	that Makefile.am contains references to $(top_srcdir) instead of
+	complete paths.  Also include generate.sh in dist_noinst_SCRIPTS
+	in the resulting Makefile.am.
+
+2005-07-28  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/config.hh.in: Added use of two sockets for IPv4.
+	Note: this should be the case for any address family.
+
+	* src/daemon/sys/realinterfaceinfo.hxx, configure.ac: Added a way
+	to force linklocal IPv6 multicast (ff02::) regardless of the
+	interface address (global or link-local), using --with-ll-mcast.
+
+2005-07-22  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/utl/args.hxx, src/switch/utl/args.hxx: Reject
+	additional unknown arguments (after getopt has finished its job).
+
+	* src/daemon/sys/linux/interfacedesc.hxx: If the requested
+	interface name does not belong to any existing interface, do throw
+	an exception (this is what was intended in the first place, but
+	there was obviously a bug).
+
+2005-07-20  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/msg/tc.hh, src/daemon/msg/tc.hxx,
+	* src/daemon/msg/mid.hh, src/daemon/msg/mid.hxx,
+	* src/daemon/msg/hna.hh, src/daemon/msg/hna.hxx: Removed useless
+	forward() implementations (as Message::forward() gets called
+	otherwise as intended).
+
+
+2005-07-07  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sch/events.hxx: removed #ifdef DEBUG around
+	duplicates dumping.
+
+	Corrected the log system to have to following properties:
+
+	1. When using -S, all unredirected output goes to syslog as soon
+	as possible.
+
+	2. When not using -S but also not using -n, unredirected output
+	goes to syslog only after detach.
+
+	3. Everything goes to debug file as well if using --debug-trace
+
+	4. All unnecessary messages are output to "dump << up" to hide
+	them if not using -v.
+
+2005-06-27  Ignacy Gawedzki  <ig@lri.fr>
+
+	The log system has been changed a bit.  PrefixBuf has been added
+	to ease indentation and other kind of prefixing.  Timestamps have
+	been moved out of LevelBuf and are now particular PrefixBufs.
+	Same goes for prefixes for error, warning and notice.  Beside
+	cosmetic changes, debug is now level 5 by default to allow one
+	more level for dump and dump_* (i.e. to be able to be "more
+	verbose" in dumps).
+
+2005-06-26  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/utl/args.hxx: Cosmetic changes to the interface
+	specification parsers and some comments about the automata.
+
+
+2005-06-24  Thomas Claveirole  <thomas.claveirole@lrde.epita.fr>
+
+	* configure.ac, src/include/net/ipaddress.hh: Adjust for GCC 4.
+
+2005-06-21  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sys/realinterfaceinfo.hxx: Checks if interface has
+	link-local address.
+
+2005-06-18  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/main.cc: Added some comments.  Removed useless
+	<syslog.h> include.
+
+2005-06-16  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sys/realinterfaceinfo.hxx: Removed sitelocal check
+	of addresses.
+
+	* src/*/main.cc (main): Added exception ostream::badbit to any
+	ostream, in order to make daemons throw an exception whenever an
+	output cannot be written (mostly because of full filesystem).
+
+	* src/include/sys/unixsocket.hxx: Removed call to close from
+	destructor.
+
+	* src/daemon/sys/realinterfaceinfo.hh: Removed useless explicit
+	qualifier from default constructor.
+
+	* src/include/sys/unixsocket.h*: Added a _bound flag to enable
+	correct socket unlink()'ing at socket destruction (avoids
+	unlinking the socket when destroying a socket returned by
+	accept()).
+
+	* src/include/net/ip*.hh: Removed is_sitelocal() method from both
+	IPv4 and IPv6 as this is deprecated.  Make use of standard macros
+	for is_linklocal().
+
+2005-06-15  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/*/main.cc: Removed putversion-if-not-debugtrace and
+	added goodbye message.
+
+	* src/*/utl/args.hxx: Added unconditional putversion to debug.
+
+2005-06-11  Ignacy Gawedzki  <ig@lri.fr>
+
+	Added #ifdefs to .hh and .hxx files that are
+	real/virtual-dependent to enable correct make check.
+	Nevertheless, make check is flawed because of the way we use those
+	dependent files.  This ought to be changed some day...
+
+	* src/daemon/sch/events.hxx: Added kernel routing tables dumping
+	to debug each time state is dumped.
+
+	* src/daemon/set/neighbors.hxx: ++quality moved from
+	cproxy_t::insert_link to Link::set_last_seqnum, so now quality is
+	increased for each received packet (and not only HELLO message).
+
+2005-06-10  Ignacy Gawedzki  <ig@lri.fr>
+
+	The message dumping infrastructure has been reworked.  Now we can
+	use --debug-trace and other dumping options simultaneously.  This
+	is achieved thanks to YBuf, a way to fork a stream in two.
+
+	A few additional bugs have been fixed and some cleaning has been
+	done in the initialization code.
+
+	A -S (or --syslog) option has been added to allow syslog dumping
+	by default.  This method is a bit worthless anyway, but let it be
+	for the moment...
+
+	* src/Makefile.am: put libutl.a and libparsedot.a directly into
+	_LDADD in order to have the dependency that isn't otherwise
+	effective with -lutl -lparsedot.
+
+2005-06-09  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/pkt/packet.hxx: Try to find the link again after
+	packet processing, since the packet could contain a HELLO for the
+	link.
+
+	* src/daemon/msg/hello.hxx: HTime field of generated HELLO
+	messages contains hello_interval instead of hello_interval +
+	maxjitter.  This is a remain of the former wrong jitter use
+	(always reschedule next HELLO to now + period - jitter, so
+	effective period i always lower than nominal period and mean
+	effective period is nominal period - maxjitter / 2).
+
+	* src/daemon/sys/socket.hxx: Added support for
+	--dirty-promisc-hack to make cards with buggy firmwares work with IPv6.
+	This simply enables and disables promiscuous mode on the interface
+	just after the socket is bound to a multicast address.  Some cards
+	(like orinoco) by default cannot receive IPv6 multicast packets,
+	so this may come in handy sometimes.
+
+	Route change is now output to debug and not dump.  The final
+	"Removing all OLSR routes..." has been simplified and output to
+	debug instead of notice.
+
+2005-06-08  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sys/linux/routingsocket.h*: Added more route
+	information to print_kernel_routes() (scope, proto and resolved
+	interface names).
+
+	* src/daemon/msg/hello.hxx: Removed nasty bug (sizeof lraw and
+	sizeof *lraw don't necessarily have the same value!).
+
+2005-06-07  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/set/neighbors.h*: Corrected link quality decrease to
+	strictly follow the RFC.  HTime expiration detection is now set at
+	each packet reception, so HTime expiration always decreases
+	quality while packet seqnum decreases only if the number of
+	consecutive HTime expirations is lower than the seqnum difference
+	(i.e. some packets have been lost beyond the number of packets
+	supposed to have contained HELLO messages).
+
+	* src/daemon/sys/linux/routingsocket.h*: Added protocol number
+	display of routes.
+
+2005-05-30  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sys/routing.h*,
+	* src/daemon/sys/linux/routingsocket.h*: Added a
+	print_kernel_routes method to display the contents of the kernel
+	routing table.  This should be useful for further table
+	management debugging.
+
+	* src/daemon/alg/routingtable.hxx: Removed apparently useless
+	distinction between IPv4 and IPv6 routing table processing.  Since
+	removal of local routes has been fixed, there is no apparent
+	reason to do it in a different way anymore.
+
+	* src/daemon/sys/linux/routingsocket.hxx: Add a gateway attribute
+	equal to address_t() to the request of remove_local_route.  This
+	avoids the kernel removing a remote route instead, because of the
+	way the kernel performs loose route matching ((addr A, iface I)
+	matches in fact remote route (addr A, via B, iface I)).  This
+	remains to be tested thoroughly, though.
+
+2005-05-19  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/include/utl/set.hh (utl::Set): Add a size() method.
+
+2005-05-19  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/utl/args.hxx: Added timestamps to --debug-trace.
+
+2005-05-18  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/sys/realinterfaceinfo.hxx: Changed the way addresses
+	are selected.  Dumped site-local address preference, as site-local
+	is no more.  Any non link-local address is okay, provided that the
+	prefix is full (i.e. the address does not belong to a subnet).
+	This allows to avoid potential routing problems when a route to
+	the subnet of OLSR address is already there.
+
+2005-05-10  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	Make Qolyester pass the sanity check.
+
+	* src/include/sys/unixsocket.hxx: Include unixsocket.hh.
+	* src/daemon/sys/routing.hh: Include alg/routingtable.hh.
+	* src/daemon/sch/events.hxx: Declare mprset_recomp and advset_changed.
+	* src/daemon/sch/events.hh: Include msg/hna.hh before the double
+	inclusion protection.
+	* src/daemon/set/duplicate.hh: Declare dup_set.
+	* src/daemon/set/routes.hxx: Include routes.hh before the double
+	inclusion protection.
+	* src/daemon/msg/hna.hxx: Include set/neighbors.hh.
+	* src/daemon/msg/message.hxx: Include set/duplicate.hh and
+	sch/events.hh.
+	* src/daemon/alg/mprselection.hxx: Declare advset_changed.
+	* src/daemon/sch/events.hh: Move the inclusion of set/client.hh
+	before the double inclusion protection.
+	* src/switch/cst/params.hh: Include utl/timeval.hh.
+	* src/switch/utl/args.hh: Include map, sstream, utl/log.hh,
+	cst/constants.hh and net/ipaddress.hh. Declare olsr::dump.
+	* src/switch/utl/args.hxx: Include args.hh.
+	* src/switch/prs/parse.hh: Include prs/data.hh.
+	* src/switch/prs/location.hh: Include ostream.
+
+2005-05-09  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/tests/Makefile.am, src/tests/sanity/base.cc,
+	* src/tests/sanity/generate.sh: New.
+	* src/Makefile.am, configure.ac: Update.
+	* bootstrap: Call src/test/sanity/generate.sh. Set -x and -e.
+
+2005-04-26  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* doc, doc/rfc3626.txt, doc/Doxyfile-switch.in, doc/Makefile.am,
+	* doc/Doxyfile-daemon.in, doc/virtual-network-v4.dot,
+	* doc/virtual-network-v6.dot, man, man/qolsrd-hna1.man,
+	* man/qolsrd-hna2.man, man/qolsrd-virtual1.man, man/qolsrd-virtual2.man,
+	* man/qolsrd-tables.man, man/qswitchd.8, man/qolsrd-mid1.man,
+	* man/qolsrd-mid2.man, man/Makefile.am, man/qolsrd-tcred.man,
+	* man/qolsrd-mprred.man, man/qolsrd.8.in, man/qolsrd-nomid1.man,
+	* src, src/daemon, src/daemon/alg, src/daemon/alg/dijkstra.hh,
+	* src/daemon/alg/routingtable.hxx, src/daemon/alg/routingtable.hh,
+	* src/daemon/alg/mprselection.hh, src/daemon/alg/mainaddrof.hxx,
+	* src/daemon/alg/dijkstra.hxx, src/daemon/alg/mainaddrof.hh,
+	* src/daemon/alg/mprselection.hxx, src/daemon/cst,
+	* src/daemon/cst/params.hcc, src/daemon/cst/params.hh,
+	* src/daemon/gra, src/daemon/gra/graph.hh, src/daemon/gra/graph.hcc,
+	* src/daemon/gra/graph.hxx, src/daemon/net, src/daemon/net/route.hxx,
+	* src/daemon/net/interface.hh, src/daemon/net/virtualinterface.hxx,
+	* src/daemon/net/realinterface.hh, src/daemon/net/route.hh,
+	* src/daemon/net/realinterface.hxx, src/daemon/net/virtualinterface.hh,
+	* src/daemon/msg, src/daemon/msg/message.hh, src/daemon/msg/tc.hh,
+	* src/daemon/msg/message.hxx, src/daemon/msg/mid.hxx,
+	* src/daemon/msg/hna.hh, src/daemon/msg/mid.hh, src/daemon/msg/tc.hxx,
+	* src/daemon/msg/hna.hxx, src/daemon/msg/hello.hxx,
+	* src/daemon/msg/hello.hh, src/daemon/pkt, src/daemon/pkt/packet.hh,
+	* src/daemon/pkt/packet.hxx, src/daemon/sch, src/daemon/sch/events.hh,
+	* src/daemon/sch/events.hxx, src/daemon/set, src/daemon/set/routes.hh,
+	* src/daemon/set/neighbors.hh, src/daemon/set/topology.hcc,
+	* src/daemon/set/topology.hxx, src/daemon/set/topology.hh,
+	* src/daemon/set/neighbors.hcc, src/daemon/set/neighbors.hxx,
+	* src/daemon/set/interfaces.hcc, src/daemon/set/interfaces.hxx,
+	* src/daemon/set/interfaces.hh, src/daemon/set/duplicate.hcc,
+	* src/daemon/set/duplicate.hxx, src/daemon/set/mid.hcc,
+	* src/daemon/set/mid.hxx, src/daemon/set/gate.hh,
+	* src/daemon/set/routes.hcc, src/daemon/set/routes.hxx,
+	* src/daemon/set/hna.hh, src/daemon/set/mid.hh, src/daemon/set/hna.hcc,
+	* src/daemon/set/hna.hxx, src/daemon/set/duplicate.hh,
+	* src/daemon/set/gate.hcc, src/daemon/set/gate.hxx, src/daemon/sys,
+	* src/daemon/sys/linux, src/daemon/sys/linux/interfaceconfig.hh,
+	* src/daemon/sys/linux/routingsocket.hxx,
+	* src/daemon/sys/linux/interfaceconfig.hxx,
+	* src/daemon/sys/linux/routingsocket.hh,
+	* src/daemon/sys/linux/interfacedesc.hcc,
+	* src/daemon/sys/linux/interfacedesc.hxx,
+	* src/daemon/sys/linux/interfacedesc.hh,
+	* src/daemon/sys/routing.hxx, src/daemon/sys/realinterfaceinfo.hxx,
+	* src/daemon/sys/realinterfaceinfo.hh, src/daemon/sys/interfaceinfo.hh,
+	* src/daemon/sys/virtualinterfaceinfo.hh,
+	* src/daemon/sys/virtualinterfaceinfo.hxx, src/daemon/sys/routing.hh,
+	* src/daemon/sys/socket.hxx, src/daemon/sys/virtual,
+	* src/daemon/sys/virtual/routingsocket.hxx,
+	* src/daemon/sys/virtual/routingsocket.hh,
+	* src/daemon/sys/virtual/interfacedesc.hxx,
+	* src/daemon/sys/virtual/interfacedesc.hh,
+	* src/daemon/sys/socket.hh, src/daemon/utl, src/daemon/utl/args.hxx,
+	* src/daemon/utl/args.hh, src/daemon/daemon_static_members_init.hcc,
+	* src/daemon/main.cc, src/Makefile.am, src/switch, src/switch/alg,
+	* src/switch/alg/forward_packet.hh, src/switch/alg/forward_packet.hxx,
+	* src/switch/cst, src/switch/cst/params.hcc, src/switch/cst/params.hh,
+	* src/switch/gra, src/switch/gra/graph.hh, src/switch/gra/graph.hcc,
+	* src/switch/gra/graph.hxx, src/switch/net, src/switch/prs,
+	* src/switch/prs/scandot.ll, src/switch/prs/data.hh,
+	* src/switch/prs/parse.hxx, src/switch/prs/data.hxx,
+	* src/switch/prs/parsedot.yy, src/switch/prs/parse.hh,
+	* src/switch/prs/visitor.hh,
+	* src/switch/prs/location.hh, src/switch/prs/data_fwd.hh,
+	* src/switch/sch, src/switch/sch/events.hh, src/switch/sch/events.hxx,
+	* src/switch/set, src/switch/set/client.hxx, src/switch/set/client.hh,
+	* src/switch/set/freeaddr.hh, src/switch/sys, src/switch/sys/linux,
+	* src/switch/sys/virtual, src/switch/utl, src/switch/utl/args.hxx,
+	* src/switch/utl/args.hh, src/switch/main.cc, src/include,
+	* src/include/cst, src/include/cst/constants.hh, src/include/net,
+	* src/include/net/ipaddress.hh, src/include/net/ipv4.hh,
+	* src/include/net/ipv6.hh, src/include/sch,
+	* src/include/sch/scheduler.hxx, src/include/sch/scheduler.hh,
+	* src/include/sys, src/include/sys/linux,
+	* src/include/sys/linux/netlink.hh,
+	* src/include/sys/linux/netlink.hxx, src/include/sys/unixsocket.hh,
+	* src/include/sys/unixsocket.hxx, src/include/utl,
+	* src/include/utl/seqnum.hh, src/include/utl/data.hh,
+	* src/include/utl/stampable.hh, src/include/utl/meta.hxx,
+	* src/include/utl/data.hxx, src/include/utl/stampable.hxx,
+	* src/include/utl/timeval.hxx, src/include/utl/syslog.cc,
+	* src/include/utl/syslog.hh, src/include/utl/mark.hh,
+	* src/include/utl/log.hcc, src/include/utl/log.hxx,
+	* src/include/utl/meta.hh, src/include/utl/comparator.hh,
+	* src/include/utl/vtime.hxx, src/include/utl/iterator.hh,
+	* src/include/utl/log.hh, src/include/utl/vtime.hh,
+	* src/include/utl/updatable.hh, src/include/utl/set.hh,
+	* src/include/utl/timeval.hh, src/include/utl/exception.hh,
+	* src/include/static_members_init.hcc, src/include/config.hh.in,
+	* BUGS, NEWS, TODO, README, scripts, scripts/gen_deps.sh, configure.ac,
+	* Makefile.am, AUTHORS, DEVELOPERS, ChangeLog, COPYING, bootstrap:
+	s/59 Temple Place - Suite 330/51 Franklin Street, Fifth Floor/.
+	s/02111-1307/02110-1301/.
+
+2005-04-20  Ignacy Gawedzki  <ig@lri.fr>
+
+	* Makefile.am: Added distmulticheck and snapdistmulticheck targets
+	to enable exhaustive configuration check.
+
+	* configure.ac: Added #include <asm/types.h> in test for
+	{,rt}netlink.h in order to make it work on Fedora Core.
+
+2005-04-19  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/include/sch/scheduler.hh (Updatable): Equip with
+	operator = (const E&).
+
+2005-04-02  Ignacy Gawedzki  <ig@lri.fr>
+
+	All the files have their include dependencies, so we don't need
+	those bloody forward.hh, all.hh and all.hxx files anymore.  This
+	should make reusing of components easier.  Most global definitions
+	are put into respective .hcc files, in order to be included by the
+	right compilation unit.  globals.hh's are out too.  The few
+	relevant things remaining inside common.hh's once you've thrown
+	out all the now useless includes has been put directly into
+	configure.ac in AH_TOP and AH_BOTTOM macros (so this code is put
+	into config.hh by autoheader).
+
+	* src/daemon/main.cc, src/switch/main.cc: Since std::cerr
+	ultimately uses stderr, putting it into fully buffered mode (4KB
+	buffer) should improve things quite a lot (think about replacing
+	write()'s of 1 byte with more efficient block writes).  This won't
+	harm message display, since each output is properly flushed (using
+	std::endl).
+
+	* src/include/static_members_init.hcc: This contains all
+	definitions of static members, to be included by the compilation
+	unit that wishes to contain them.  This is necessary for separate
+	compilation purposes.
+
+	* configure.ac, Makefile.am: Changed the way snapdist versions are
+	generated.  Now the date is calculated at 'make snapdist'-time and
+	not configure-time.  There should be an automatic way to produce
+	doxygen doc, though.
+
+2005-03-29  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/daemon/utl/args.hxx, src/switch/utl/args.hxx: Added support
+	for -T option that activates timestamps on logging messages.
+
+	* src/include/utl/log.hh, src/include/utl/log.hxx: Added timestamp
+	capability for logging purposes.  Added basic_dummyostream
+	definition aimed at being typedef'ed to dummy_ostream_t in case of
+	--disable-debug building: this is to suppress any simple debug
+	output code to be entirely suppressed.
+
+	* src/include/sch/scheduler.hh, src/include/sch/scheduler.hxx:
+	Added proper Scheduler destructor which destroys remaining events
+	gracefully.
+
+2005-03-29  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/include/utl/data.hxx (Data_::~Data_): Do not try to print
+	data_->usecount if data_ is NULL.
+
+2005-03-28  Ignacy Gawedzki  <ig@lri.fr>
+
+	The scheduler has been remade almost from scratch.  The Event
+	hierarchy is much simpler: there are no more handlers, only
+	events.  Events are handling themselves and are responsible for
+	managing their lifetime.  Any event processing (insert, erase,
+	destroy) is done through the scheduler and handling of reentrancy
+	is improved and simplified.
+
+	The Deleter and DeleterSet are no more.  Sets can have Updatable<>
+	elements which hence have associated TimedEvents responsible for
+	updating the elements wrt. the set (e.g. erasing the element from
+	the set).  The sets manage the associated TimedEvents at element
+	insertion or removal.  This simplifies things a lot.
+
+	Processing of exceptions is improved in virtual mode, to enable
+	graceful quit in case of a sudden death of the switch.  The initial
+	dialog between the switch and daemons has changed a bit (the
+	client sends a zeroed address instead of an empty packet if it
+	wants a default address and vice-versa) mostly to avoid sending
+	empty packets (which are indistinguishable from a connection drop
+	from the receiver's standpoint).
+
+	* bootstrap: Changed -fvim into -f -v -i -m .
+
+2005-03-25  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/Makefile.am (qswitchd_SOURCES, qolsrd_SOURCES): Add missing
+	sources, so it distcheck with both CONFIGURE_DISTCHECK_FLAGS empty
+	and CONFIGURE_DISTCHECK_FLAGS=--enable-virtual.
+
+2005-03-24  Ignacy Gawedzki  <ig@lri.fr>
+
+	A new logging system has been implemented.  It is easier to use
+	both from inside and outside the source.  In virtual mode, the
+	parsing messages are now caught by this system and can thus be
+	redirected to logfiles easily.
+
+2005-03-16  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/include/utl/data.hh, src/include/utl/data.hxx: Add a copy
+	constructor. Print debuging information.
+
+2005-03-15  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/include/utl/data.hxx, src/include/utl/data.hh: Clean. Rewrite.
+	Document.
+
+2005-03-15  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/include/utl/meta.hh (i_static_assert, d_static_assert): Use
+	variadic macro argements.
+
+2005-03-14  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/switch/sch/events.hh, src/switch/sch/events.hxx: Use a queue of
+	pending packets and only one PacketSender.
+	* src/switch/globals.hh: Update.
+
+2005-03-11  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/include/sch/scheduler.hh (less_ioevent): Make input IOEvent
+	have a higher priority.
+
+2005-03-11  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	(qswitchd) Do not send packets directly. Queue them and use the
+	scheduler and poll(2) to ensure their delivery will not block.
+
+	* src/switch/sch/events.hh, src/switch/sch/events.hxx: Rename
+	PacketSender as PacketGenerator.  Create PacketSender. Make
+	PacketGenerator queue packets instead of sending them directly.
+	* src/switch/sch/forward.hh: Forward declare PacketGenerator.
+	* src/switch/globals.hh: Do not send packet directly when
+	forwarding.  Queue them using a PacketSender.
+
+2005-03-02  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/sch/scheduler.hxx: Added ignoring of SIGPIPE, to
+	enable EPIPE handling in socket primitives.
+
+2005-03-02  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/include/msg/message.hh, src/include/msg/message.hxx: Add
+	hopcount in Message::header.
+	* src/include/msg/tc.hxx: Print hopcount when dumping TC messages.
+
+2005-03-01  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* src/switch/prs/parsedot.yy (stmtlist): Make the list left-associative
+	to avoid parser stack overflows.
+
+2005-02-14  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	This avoid cryptic and unrelated error messages when forgetting a
+	closing brace in other source files of Qolyester.
+
+	* src/include/gra/graph.hh: Move operator << for AdjGraph in the
+	olsr::gra namespace.
+	* src/include/net/ipv4.hh, src/include/net/ipv6.hh: Move operator <<
+	for IPv4Address and IPv6Address into the olsr::net namespace.
+
+2005-02-10  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* configure.ac: Tell Autoconf we are using C++.
+
+2005-01-31  Ignacy Gawedzki  <ig@lri.fr>
+
+	Some fixes allowing in fact to route packets (!).  There are
+	potential problems that could be avoided, but the way this should
+	be done is yet unclear: routes that could potentially interfere
+	with the ones Qolyester will have to manipulate should be removed
+	at launch and added back at shutdown.  This would require some
+	more advanced route analysis that seems to be useless as long as
+	autoconfiguration and a sensible addressing scheme are not
+	implemented.
+
+	* src/include/sys/linux/routinsocket.hxx: local routes are added
+	and removed with RT_SCOPE_LINK instead of RT_SCOPE_UNIVERSE.  This
+	happens to matter in IPv4 (but not IPv6, apparently).
+
+	* src/include/sys/linux/interfaceconfig.hh: in case of IPv6,
+	forwarding must be activated for all the interfaces, so we have to
+	use /proc/sys/net/ipv6/conf/all/forwarding and not
+	/proc/sys/net/ipv6/conf/eth?/forwarding.  This is obviously not
+	the way things should be ultimately, but it seems separate
+	forwarding is not yet functional in the IPv6 stack implementation.
+
+	* src/include/sys/socket.h*: bind_mcast_to_device() renamed to
+	set_multicast().
+
+	* src/include/net/interface.hxx: the sockets seem to be correctly
+	initialized now.
+
+2005-01-17  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	Minor fix. Remove some generated files from revision control.
+
+	* mkinstalldirs, depcomp, INSTALL, missing, install-sh: Delete.
+	* bootstrap: Add a space between #! and /bin/sh. Use -fvim
+	instead of -vim for autoreconf.
+
+2005-01-06  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/set/neighbors.hxx: fixed processing of link quality.
+
+2005-01-06  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	Due to the lack of parenthesis around the Rhs argument, the generated
+	file was unable to compile (Bison 1.875d).
+
+	* src/switch/prs/parsedot.yy (YYLLOC_DEFAULT): Protect macro
+	parameters.
+
+2005-01-04  Ignacy Gawedzki  <ig@lri.fr>
+
+	Added /proc/sys/net/ipv?/conf support to allow easy use. =)
+	Does it route packets now?
+
+	* src/utl/pointer.hh: trivial smart shared pointer support.
+
+2005-01-04  Thomas Claveirole  <thomas.claveirole@gmail.com>
+
+	* bootstrap: New.
+
+2004-10-23  Ignacy Gawedzki  <ig@lri.fr>
+
+	The way links are handled has been modified to comply with the
+	RFC.  Now two links with the same remote interface address but
+	different local interface address can coexist.
+
+	The generation of HELLO messages has been modified too to comply
+	with the RFC.  All links to a neighbor with the local interface
+	equal to the current interface (the one the HELLO message is being
+	generated for) are advertised.
+
+	* src/daemon/globals.hh: The order of the variables has been
+	modified to ensure that cproxy, thn_set and topo_set are destroyed
+	while path_net is still there, to avoid possible crashes at
+	shutdown.
+
+2004-08-06  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/msg/hna.hxx: Added numerical prefix compatibility
+	feature, pluggable using --enable-numprefix configure flag.
+
+2004-06-24  Ignacy Gawedzki  <ig@lri.fr>
+
+	* configure.ac: Added support for --with-all-routers to enable
+	using the ::2 suffix on multicast address for interoperability
+	reasons.  Added format checking for some AC_ARG_WITHs.
+
+	* src/include/sys/interfaceinfo.hxx: Added support for global
+	addresses and rewrote the address selection scheme.  Now global
+	addresses are preferred over site-local ones over link-local
+	ones.
+
+2004-06-23  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/*/utl/args.hxx: Cosmetic fixes.
+
+	* src/include/sys/virtual/routingsocket.h*: Added definitions for
+	RoutingSocket::remove_old_routes().
+
+	* src/Makefile.am: Changed a few things for more uniformity of
+	generated source files (from Flex and Bison sources).
+
+	* src/include/msg/message.h*: Added a constructor for
+	Message::header, instead of using initialization construct.
+
+	* src/include/sch/scheduler.hxx: Fixed another bug in
+	PeriodicEvent::reset(), this time.  In fact, on intel, the jitter
+	in transmitting periodic messages was never applied, due to a
+	rather obscure problem of order of evaluation.
+
+	* src/include/sch/scheduler.hxx: Fixed a bug in PeriodicEvent's
+	constructor.  We have to clip the jitter to the period, otherwise
+	we get negative timeval_t (i.e. we get broken asserts, as a matter
+	of fact).
+
+2004-06-22  Ignacy Gawedzki  <ig@lri.fr>
+
+	* configure.ac: Added AC_ARG_WITHs for all the OLSR and internal
+	tunable values.
+
+	* src/include/cst/constants.hh: Changed all constants to def_
+	prefixed constants and made former ones global variables.  Note
+	however that changing these values dynamically does not imply
+	change of behavior, as ofter PeriodicEvents have to be changed as
+	well.
+
+	* configure.ac: Fixed the --with-doxygen option handling.
+
+	* src/include/sys/linux/routingsocket.hxx: Netlink is behaving
+	really strangely with respect to the man pages (mainly
+	netlink(7)).  When requesting the list of all the entries in the
+	routing table, the kernel sends each entry in one message and then
+	appends a multipart message that is only composed of the DONE
+	message which indicates the end of the multipart message.
+	Therefore in the newly added remove_old_routes() method, we call
+	NLSockeT::receive() twice: once for the list and once for the
+	ack-sort-of.
+
+	Added a way to share open log files and avoid having two ofstream
+	on the same file at the same time.  While this works pretty well
+	with the ios::app flag, it can cause file corruption on NFS (see
+	open(2) for description of O_APPEND).
+
+2004-06-21  Ignacy Gawedzki  <ig@lri.fr>
+
+	Fixed lots of bugs related to detaching and logging.
+	Added --debug-trace=FILE command line parameter, to ease bug
+	reporting.
+
+2004-06-18  Ignacy Gawedzki  <ig@lri.fr>
+
+	Added support for using the syslog(3) facility in case of daemon
+	detach.  This prevents the daemon from aborting due to an attempt
+	to write to cerr.
+
+
+2004-06-12  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/include/sys/virtualinterfaceinfo.*: Generate interface
+	indexes automatically based on unique (name, index) association.
+
+	* src/daemon/utl/args.hxx: Check if the same interface is given
+	twice in the command line.
+
+2004-06-11  Ignacy Gawedzki  <ig@lri.fr>
+
+	* man/qolsrd.8.in: The man page is now build at configure time, to
+	reflect the presence and absence of optional features.
+
+	Integrated Virtual Interfaces and Switch code.  Virtual interfaces
+	are a replacement for real network interface code in the daemon to
+	allow running several instances of the daemon on the same machine
+	and make them communicate using a Switch process that routes the
+	packets between client instances.  This is provided for testing
+	and debugging purposes, as some configurations are really hard to
+	setup using actual wireless nodes (PDAs, or laptops).
+	The Virtual mode is activated on configuration time using the
+	--enable-virtual switch.  This triggers the build of the Switch
+	process as well.
+
+	Since the Switch and the daemon share a lot of code, the source
+	file architecture has been changed a bit.
+
+	  /src constains the source files and the Makefile.
+
+	  /src/daemon contains all sources that are specific for the daemon.
+
+	  /src/switch contains all sources that are specific for the switch.
+
+	  /src/include contains all sources that are common to both of them.
+
+	Each build includes first from its own directories and then from
+	the common sources.  This is done to allow overriding of some
+	sources for one of the build.
+
+	For the moment, the Switch lacks the ability to read a network
+	topology description file.  This should be taken care of shortly
+	and Perl scripts for random generation of topologies will be
+	provided.
+
+2004-06-08  Ignacy Gawedzki  <ig@lri.fr>
+
+	Command-line -i arguments are now really parsed in order to allow
+	more elasticity in interface configuration. =)
+
+	The -n flag has become optional, since the daemon figures out when
+	it is implied.
+
+	Integrated daemon-side "virtual" interfaces.  This is unusable
+	without an additional program that is going to be integrated as
+	well.  The idea is to replace the network interfaces with virtual
+	ones that communicate with a switching process, to allow starting
+	many daemon instances in one machine and make them communicate
+	with each other.
+
+	Quite a few changes in the way global variables are declared (in
+	src/global.hh) to render the scheduler more generic (read: I want
+	to reuse it in the switch).
+
+2004-06-05  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/sys/linux/routingsocket.hxx: Added destruction of response
+	messages both before throwing exceptions and before returning.
+
+	* src/sys/linux/netlink.hxx: Added destruction of objects
+	allocated on the heap before throwing exceptions.
+
+	* src/sys/linux/netlink.hh: Added virtual destructor to classes
+	that lacked one (especially NLMessage!).
+
+	* src/alg/routingtable.hxx: Remove remote routes in two steps:
+	first remove those that have been updated with a local route
+	before adding the new remote routes and then remove the remaining
+	remote routes before removing local routes.  This avoids an error
+	when we try to add a remote route which next hop had previously a
+	remote route which will be removed with all old remote routes.
+
+	* src/set/routes.hxx: Added * and - operator between a rrouteset_t
+	and a lrouteset_t, to allow extraction of old remote routes that
+	have been updated by a local route.
+
+2004-05-26  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/net/interface.hxx: Added _prefix initialization in
+	Interface's copy constructor.
+
+2004-05-25  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/set/interfaces.hxx: Clear the pending_messages list in
+	send_messages if the interface set is empty.  There is no apparent
+	need to accumulate messages until an interface is added.
+
+	* src/sch/scheduler.hxx: Fixed a bug causing a segfault when
+	destroying a IOEvent.
+
+2004-05-21  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/set/neighbors.hxx: Wrote a destructor for CoherenceProxy, in
+	order to remove all links first and avoid automatic neighbors'
+	deletion which would bypass the proxy (and thus all stages of a
+	neighbor deletion, including making the neighbor asymmetric first
+	which implied clean removal of updater if the neighbor was an MPR
+	selector).
+
+	* src/main.cc (main): Added version printing to debug.
+
+	* src/utl/args.hxx: Updated usage message and introduced #ifdefs
+	to avoid printing help about not compiled-in options.  NOTE:
+	should enable autoconf to adapt the man page as well.
+
+	* Makefile.am (dist-hook): Added a version file management to
+	track snapshot distributions.
+
+	* configure.ac: Added caching of STL check.
+
+	* src/sch/scheduler.hxx: The scheduler does not work using
+	setitimer() and SIGALRM anymore.  This proved to be a real pain in
+	the ass to prevent all race conditions and ensure that the timer
+	is always set correctly.  Now the timeout in poll() is used
+	instead, although its maximum duration is limited to INT_MAX
+	millisecondes (i.e. 596+ hours), but that should be fairly
+	sufficient.  Now we know that expiration dates are exact and
+	timeval_t::is_past() is now a simple comparison.
+
+2004-05-20  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/utl/log.hxx: Fixed a bug which caused the mark to be printed
+	after the first line's content.
+
+	Many changes this time.  The scheduler has been profoundly
+	redesigned, mainly to allow event removal and addition at any
+	time, no matter what state the scheduler is in.
+
+	Added a --disable-debug switch to configure, to allow disabling of
+	debugging features.  Use of this option is not recommended at this
+	stage of development, since no debugging information is issued
+	(even with the -v option) and all asserts are disactivated.
+
+2004-05-19  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/sch/scheduler.hxx: Changed the way Updaters are managed.
+	Now each object has the responsibility to remove its deleter from
+	del_set and delete its instance.  Deleters have now names that are
+	displayed in debugging output.  The deleter set is not simply
+	iterated upon during Updater's execution, this could lead to a
+	segfault situation where an already removed deleter was executed.
+	This bug was also present in Scheduler::handle_tevents().
+
+2004-05-18  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/msg/tc.hxx: Yet another set_time bug fixed.
+
+	* src/net/interface.hxx: Add preprocessor #ifdef's to allow
+	compile-time choice of using two sockets per interface.  By
+	default, two sockets are used with IPv6 and only one with IPv4.
+
+2004-05-17  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/gra/graph.hh: AdjInfo's weight are tags from now on, as they
+	should have been since the beginning.
+
+	* src/sch/scheduler.hxx: Added dump of hna_set in --dump-state.
+
+	* src/set/hna.hxx: Fixed a bug in HNAEntry::set_time(), which
+	consisted in the method taking a delay instead of a date.
+
+	* src/set/topology.hxx: Same bug fixed, but this one was harmless,
+	since the set_time() method is never used. =)
+
+2004-05-12  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/utl/set.hh: Check if stamp is already set to the wanted date
+	before stamping in MSIndex.  This avoids MaskIterator entering a
+	loop.
+
+2004-05-11  Ignacy Gawedzki  <ig@lri.fr>
+
+	Added the possibility to disable the Link Hysteresis feature at
+	configuration time.
+
+	* src/alg/mprselection.hxx: Fixed a little bug in preliminary MPR
+	selection.  When some MPRs were selected because they were
+	required to honor minimum MPR-coverage, additional 2-hop neighbors
+	that were reached through them were not removed from the set of
+	still-to-be-reached 2-hop neighbors.
+
+2004-05-06  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/net/route.hh: Fixed a major bug in route equality
+	operators.  Routes are now differenciated with respect to
+	destination address, prefix length and interface index for local
+	routes and destination address, prefix length and next hop address
+	for remote route.  Now route flushing should be done correctly.
+
+	* src/net/route.hxx: Fixed another bug created by the previous
+	fix. =)  The change in equality operators implied the impossibility
+	of searching for routes using only destination address and prefix
+	length.  Thus a copy constructor has been added to check that
+	nobody tries to use a local route with interface of index 0 (there
+	shouldn't be any such interface) or a remote route with ::
+	destination (or 0.0.0.0 for IPv4).
+
+	Changed some debug messages, commented out some ancient and
+	apparently useless ones.
+
+2004-05-05  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/set/neighbors.hxx: Added effective marking of the
+	advset_changed flag when the advertised set changes, the absence
+	of which prevented early updated TC transmission.
+
+2004-05-04  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/set/neighbors.hxx: Trigger routing table re-calculation when
+	the strict symmetric 2-hop neighborhood is changed.
+
+	* src/set/topology.hxx: When topology tuples are removed, endpoint
+	nodes are not removed from the topology graph if they are
+	symmetric 1-hop neighbors.  Moreover, topology tuples now only add
+	arcs (and endpoint nodes if they don't exist) instead of edges
+	(i.e. arcs in both directions), to allow more compliant routing
+	calculation.
+
+	* src/alg/dijkstra.hxx: Arcs with weight 0 are generated from
+	2-hop neighbor tuples and are used only if no better arc is
+	found.  Now the closest node must have weight > 0 for the arc to
+	be used (conforming to RFC 3626 section 10, i.e. we don't want to
+	route towards 2-hop neighbors through a 1-hop neighbor which
+	willingness is WILL_NEVER.
+
+	* src/sch/scheduler.hxx: Changed notations in state dumping.
+	Install distinct signal handlers for SIG{TERM,INT,QUIT,ABRT,ALRM}
+	and repect previous signal ignoring (cf. GNU Libc documentation
+	about signal handling).
+
+2004-05-03  Ignacy Gawedzki  <ig@lri.fr>
+
+	Many changes in the sys/ directory.  Network interface
+	construction and related stuff in sys::InterfaceInfo are now done
+	is such a way to allow in-flight interface shutdown and start.
+	Routines have been added to allow interface address addition and
+	removal.  But still, an interface's address cannot be used right
+	away, some wait time has to be observed (not implemented yet).
+	The whole thing is aimed at making implementation of
+	autoconfiguration schemes easier (a node can now change its
+	address).
+
+	For IPv6 operations, an interface now works with two sockets, one
+	for reception and another for transmission.  This allows us to
+	know which source address will be used in the packets.
+
+2004-05-02  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/alg/dijkstra.hxx: An arc with 0 weight (indicating that this
+	arc has been put by TwoHopNeighborSet) is only used if the first
+	endpoint (the "source") is in the source node set (i.e. is a
+	symmetric neighbor).  This avoids building non-conforming (in
+	terms of RFC) routes to a former symmetric neighbor for which
+	a 2-hop tuple is still present in the table.
+
+	* src/set/neighbors.hxx: TwoHopNeighborSet does not add edges into
+	the topology graph anymore, but arcs.  The purpose is to avoid
+	situations where the routing calculation routing would choose to
+	reach a one-hop (or a "former" one-hop) neighbor through a two-hop
+	neighbor for the only reason that the 2-hop tuple is still present
+	in the table.
+
+2004-04-29  Ignacy Gawedzki  <ig@lri.fr>
+
+	* gra/graph.hxx: fixed a little bug in
+	AdjGraph::remove_edge_then_node().
+
+2004-04-07  Ignacy Gawedzki  <ig@lri.fr>
+
+	Now the garbage collector is used as an "updater".  This means
+	that many tuples have to be simply updated at a precise time.
+	This is now ensured by shifting the garbage collecting event to
+	the next "exact" update event.  Now any expiration that triggers
+	some further operation (MPR reselection, etc) is handled as soon
+	as possible.  There are some considerations about SIGALRM
+	precision (SIGALRM *does* get delivered sooner than expected),
+	that may imply some more changes to come.
+
+	Polling interfaces for output is not implemented using output
+	events with packets to be sent out as soon as possible.
+
+	Interfaces get cleaned up a bit and do not provide any accessor to
+	their socket.  This was used to build the PacketReceiver event
+	using the pollfd returned by the interface's socket.  Now
+	interfaces build the event themselves, hence enabling to create
+	more exotic interfaces that don't necessarily rely on internet
+	sockets (but on UNIX sockets, for example).
+
+2004-04-03  Ignacy Gawedzki  <ig@lri.fr>
+
+	Implementation of Link Hysteresis.  This is not yet extensively
+	tested.  Note for later: various optional features should be
+	unpluggable at compile time with autoconf switches.
+
+	* src/sch/scheduler.h{h,xx}: Addition of metaprogramming
+	structures to make event addition more clear.
+
+2004-03-31  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/sys/socket.hxx: The socket is now bound to the multicast
+	address in the case of IPv6.  This went unnoticed before Linux
+	kernel version 2.4.25, because of a bug in address checking
+	procedures.  It should therefore work again on any kernel version
+	(I have yet to check this out).
+
+2004-03-25  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/set/links.hxx: Corrected minor bug in
+	TwoHopNeighbor::operator<().
+
+	Documentation generated by Doxygen gets removed when issuing a
+	make clean.
+
+2004-03-22  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/sys/socket.hxx: Now sockets are bound to :: instead of the
+	interface's address.  Seems to fix a bug on kernel 2.4.25.  There
+	shouldn't be any problem with this, since attachment to a
+	particular interface is performed explicitly anyway.
+
+2004-03-16  Ignacy Gawedzki  <ig@lri.fr>
+
+	Doxygen seems to work again (at least with version 1.3.6).
+
+	A little cleaning up in the doxygen comments has been made.  Some
+	more documentation has been written, but there is a lot of work to
+	be done yet.
+
+2004-01-30  Ignacy Gawedzki  <ig@lri.fr>
+
+	* configure.ac: Doxygen is disabled by default and can be enabled
+	using the --with-doxygen flag allowing at the same time to specify
+	the path to the doxygen executable.
+
+2003-12-08  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/alg/dijkstra.hxx: now the algorithm supports a partitioned
+	topology graph (in case a remote TC comes before a nearer one).
+
+2003-12-07  Ignacy Gawedzki  <ig@lri.fr>
+
+	Packet seqnums are now local to each interface.
+
+2003-12-06  Ignacy Gawedzki  <ig@lri.fr>
+
+	The way perishable elements are managed has changed quite a bit.
+	Now MaskIterator is not used to erase invalid elements anymore, as
+	all of them are taken care of by the garbage collector (we now
+	really use the garbage collector, since it is the only way to
+	delete perished elements).
+
+	In addition to erasing of perished elements, the garbage collector
+	is used to update time-dependent status of elements.  For example,
+	the fact that a link has become asymmetric is now noticed within
+	one garbage collecting period.
+
+	* src/sch/scheduler.hh: while resetting the next iteration time of
+	periodic events, we now take into account the last jitter used, to
+	maintain a stable mean period.
+
+2003-12-03  Ignacy Gawedzki  <ig@lri.fr>
+
+	A few enhancements and more bugfixes.  Now the 2-hop neighbor set
+	is used to increasing connectivity when 1-hop links break and MPRs
+	have not sent any TC message yet.
+
+2003-12-02  Ignacy Gawedzki  <ig@lri.fr>
+
+	Too much files have been changed to be detailed here.
+
+	The core has been modified to implement a whole new and clearer
+	way to maintain coherence between links and neighbors.  Now the
+	coherence in ensured by the use of set::CoherenceProxy defined
+	along with Link, Neighbor and TwoHopNeighbor in set/links.h{h,xx}.
+
+	In addition to the use of Subsets and Indexes -- which ensured
+	with the use of MaskIterator that any dereferenced data was always
+	conforming to some requirements (validity or other properties) --
+	a garbage collector has been implemented to erase elements a short
+	time (actually 500 ms but should be parameterizable at run time)
+	after their validity has expired.  This allows to avoid explicit
+	iteration over not-naturally-iterated-on sets (like DuplicateSet).
+
+	An effort to separate system interface dependent code to a
+	separate section has been made.  Now almost (if not all)
+	system-dependent code has been moved to sys/ so porting should be
+	easier.
+
+2003-10-16  Ignacy Gawedzki  <ig@lri.fr>
+
+	* src/alg/routingtable.hxx: fixed routing entry bug causing
+	redundant routes and segfault.
+
+	* Some minor bug fixes, but there are still problems with sets
+	coherence that have to be handled.
+
+2003-09-30  Ignacy Gawedzki  <ig@lri.fr>
+
+	* configure.ac: Added support for --with-doxygen.  Now
+	doxygen-generated documentation is included in distribution
+	packages.
+
+	* Written the file DEVELOPERS which contains useful information
+	for people willing to look under the hood.
+
+2003-09-25  Ignacy Gawedzki  <ig@lri.fr>
+
+	* Written the man page.
+
+2003-09-19  Ignacy Gawedzki  <ig@lri.fr>
+
+	* Initial packaging, previous changes are not relevant.
+

@@ -1,0 +1,66 @@
+
+What you need to do prior to mailing us with bug reports
+--------------------------------------------------------
+
+  These advices are given to speed up bugfixing and prevent redundant
+  reports.  Please follow them to help us work more efficiently.
+
+  . Make sure you are using the latest available snapshot.  New
+    snapshots are made available anytime some bugfix or improvement is
+    committed into the project.  Actually, the authoritative source for
+    snapshots is here:
+
+    http://qolsr.lri.fr/code
+
+  . If the bug you are willing to report is static (i.e. happens during
+    or prior to compilation), please attach the configure log (config.log)
+    and the output of the compiler.
+
+  . If the bug is dynamic, please start the program with the following
+    options in addition to the options you want to use:
+
+    qolsrd --dump-all --all-file=trace.out -v -v -v ...
+
+    Here ... stands for your usual options.  This has the effect to dump
+    tons of potentially useful information into the file named trace.out .
+    An additional effect is that the program runs in the foreground.  If
+    this happens to prevent the bug from appearing, please start the
+    program in the following way:
+
+    strace -t -f -o trace.out qolsrd ...
+
+    Again, ... stands for your usual options.  The strace program must
+    be available on your computer.  This dumps all the system calls made
+    by the program during its execution and may help to pinpoint the
+    problem, without interfering with the program's normal operation.  If
+    you have trouble stopping the program when run this way, suspend it
+    (usually Ctrl-Z suspends), kill the program (here qolsrd and not
+    strace) and then resume the suspended task (using the fg command
+    should work).
+
+  . Dynamic bugs are often tightly related to the configuration of the
+    network on which the program is run.  Please include a description
+    of the topology and possibly topology change that leads to the faulty
+    behavior, along with the addresses used on each node.  Qolyester is
+    nowadays distributed with a testing platform that allows running an
+    arbitraty setup on the same host.  Since this testing platform is not
+    yet fully functional, we do not make much fuss around it.  Stay tuned
+    for more information.
+
+
+Known bugs
+----------
+
+ * When the daemon crashes or gets killed by SIGQUIT, it does not
+   clean the routing tables.  This is a feature.
+
+ * Some old versions of doxygen choke on the code and segfault.  If
+   this is your case, a simple upgrade should make it.  This is why
+   documentation generation with doxygen is disabled by default and one
+   has to use the --enable-doxygen flag to enable it explicitly.
+
+ * This should be taken care of, but I don't see any good way to solve
+   it: g++-2.9x is not conforming to the standard and its version of
+   the STL is not declared inside ::std.  For this reason, anytime the
+   compiler sees std::set it changes it to set and thus confuses it
+   with the ::olsr::set namespace and refuses to compile.

@@ -1,0 +1,9 @@
+digraph "example" {
+        a [address="fec0::1"];
+        b [address="fec0::2"];
+        c [address="fec0::3"];
+        a -> b [loss="0.25",delay="100"];
+        b -> a;
+        b -> c;
+        c -> b;
+}

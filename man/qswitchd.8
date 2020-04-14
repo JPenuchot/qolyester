@@ -1,0 +1,108 @@
+\" Copyright (C) 2003, 2004, 2005 Laboratoire de Recherche en Informatique
+\"
+\" This file is part of Qolyester.
+\"
+\" Qolyester is free software; you can redistribute it and/or
+\" modify it under the terms of the GNU General Public License
+\" as published by the Free Software Foundation; either version 2
+\" of the License, or (at your option) any later version.
+\"
+\" Qolyester is distributed in the hope that it will be useful,
+\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+\" GNU General Public License for more details.
+
+\" You should have received a copy of the GNU General Public License
+\" along with this program; if not, write to the Free Software
+\" Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+.TH qswitchd 1 "June 2004" Linux
+.SH NAME
+qswitchd \- Qolyester
+.SM OLSR
+switch daemon
+.SH SYNOPSIS
+.B qswitchd [\fIOPTION\fR]... \fIFILENAME\fR...
+.SH DESCRIPTION
+.B qswitchd
+is the Qolyester switch daemon.  It is used to make several Qolyester
+instances communicate with each other on the same host, for simulation
+purposes.  The mandatory argument is a \fB.dot\fR file describing the network
+topology.
+.SH OPTIONS
+.TP
+\fB--switch-sockfile=FILENAME\fR
+Set the filename to be used for communication with the Qolyester's switch.
+This will be the same socket filename given as argument to qolsrswd.
+.TP
+\fB-T\fR, \fB--timestamps\fR
+Print timestamps at each message line.
+.TP
+\fB-v\fR, \fB--verbose\fR
+Print various debugging messages.
+.TP
+\fB--error-file=FILE\fR
+Set the file to which error messages are to be written.  By default,
+error messages are printed on stderr.
+.TP
+\fB--warning-file=FILE\fR
+Set the file to which warning messages are to be written.  By default,
+warning messages are printed on stderr.
+.TP
+\fB--notice-file=FILE\fR
+Set the file to which notice messages are to be written.  By default,
+notice messages are printed on stderr.
+.TP
+\fB--dump-file=FILE\fR
+Set the file to which debugging/illustrative dumps are written.  By
+default, dumps are printed on stderr.
+.TP
+\fB--all-file=FILE\fR
+Set the default file to which all dumps are written.  Other
+\fB--*-file\fR options override this.
+.TP
+\fB-h\fR, \fB--help\fR
+Print brief usage instructions on stderr.
+.TP
+\fB-n\fR, \fB--no-detach\fR
+Prevents the daemon from detaching from the control terminal.  This is
+provided for debugging purposes.  If any of the \fB--dump-\fR... flags
+is used, and any dump is to be written to stderr, \fB-n\fR is implicit.
+.TP
+\fB--version\fR
+Print current version information on stderr and exit.
+.TP
+\fB--dump-state\fR
+Dump the internal state every second.
+.TP
+\fB--dump-prof\fR
+Prints the time in seconds spent in each event loop.
+.TP
+\fB--debug-trace=FILE\fR
+Activates all the options required to produce a trace file used for bug
+reporting.
+.TP
+\fB--dump-interval=MSEC\fR
+Sets the state dump interval to \fBMSEC\fR milliseconds.
+.SH BUGS
+There are certainly lots of bugs left.  Please let me know.
+.sp
+Qolyester switch only runs on Linux kernel 2.4 series for the moment, porting
+to *BSD is not my primary concern, but any external help in this
+direction is welcome.
+.SH AUTHOR
+Written by Ignacy Gawedzki <ig@lri.fr> and Benoit Bourdin <benoit.bourdin@fleming.u-psud.fr>
+.SH COPYRIGHT
+Copyright (C) 2004 Laboratoire de Recherche en Informatique.
+.br
+This is free software; see the source for copying conditions.  There
+is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.
+.SH SEE ALSO
+As of version 0.1, Qolyester conforms to the \f(SMOLSR\fR \f(SMIETF\fR
+RFC 3626 which can be found at 
+.BR http://www.ietf.org/rfc/rfc3626.txt
+'br
+\&.
+
+\fBqolsrd\fR(8)

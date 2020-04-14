@@ -1,0 +1,337 @@
+/* src/include/config.hh.in.  Generated from configure.ac by autoheader.  */
+
+#ifndef QOLYESTER_CONFIG_HH
+# define QOLYESTER_CONFIG_HH 1
+
+/* Define to 1 if you have the <arpa/inet.h> header file. */
+#undef HAVE_ARPA_INET_H
+
+/* Define to 1 if you have the `ceilf' function. */
+#undef HAVE_CEILF
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#undef HAVE_FCNTL_H
+
+/* Define to 1 if you have the `floorf' function. */
+#undef HAVE_FLOORF
+
+/* Define to 1 if you have the `gettimeofday' function. */
+#undef HAVE_GETTIMEOFDAY
+
+/* Define to 1 if you have the `inet_ntoa' function. */
+#undef HAVE_INET_NTOA
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <linux/netlink.h> header file. */
+#undef HAVE_LINUX_NETLINK_H
+
+/* Define to 1 if you have the <linux/rtnetlink.h> header file. */
+#undef HAVE_LINUX_RTNETLINK_H
+
+/* Define to 1 if you have the <linux/sysctl.h> header file. */
+#undef HAVE_LINUX_SYSCTL_H
+
+/* Define to 1 if you have the <linux/types.h> header file. */
+#undef HAVE_LINUX_TYPES_H
+
+/* Define to 1 if you have the <linux/unistd.h> header file. */
+#undef HAVE_LINUX_UNISTD_H
+
+/* Define to 1 if you have the `localtime_r' function. */
+#undef HAVE_LOCALTIME_R
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `memset' function. */
+#undef HAVE_MEMSET
+
+/* Define to 1 if you have the <netdb.h> header file. */
+#undef HAVE_NETDB_H
+
+/* Define to 1 if you have the <netinet/in.h> header file. */
+#undef HAVE_NETINET_IN_H
+
+/* Define to 1 if you have the `roundf' function. */
+#undef HAVE_ROUNDF
+
+/* Define to 1 if you have the `socket' function. */
+#undef HAVE_SOCKET
+
+/* Define to 1 if stdbool.h conforms to C99. */
+#undef HAVE_STDBOOL_H
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the `strerror' function. */
+#undef HAVE_STRERROR
+
+/* Define to 1 if you have the `strftime' function. */
+#undef HAVE_STRFTIME
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the `strtoul' function. */
+#undef HAVE_STRTOUL
+
+/* Define to 1 if you have the <syslog.h> header file. */
+#undef HAVE_SYSLOG_H
+
+/* Define to 1 if you have the <sys/socket.h> header file. */
+#undef HAVE_SYS_SOCKET_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#undef HAVE_SYS_TIME_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <sys/un.h> header file. */
+#undef HAVE_SYS_UN_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the `vfprintf' function. */
+#undef HAVE_VFPRINTF
+
+/* Define to 1 if the system has the type `_Bool'. */
+#undef HAVE__BOOL
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Use "all routers" IPv6 multicast type */
+#undef QOLYESTER_ALL_ROUTERS
+
+/* Default MPR willingness */
+#undef QOLYESTER_DEFAULT_WILLINGNESS
+
+/* State dump interval */
+#undef QOLYESTER_DUMP_INTERVAL
+
+/* Duplicates holding time */
+#undef QOLYESTER_DUP_HOLD_TIME
+
+/* Debugging features */
+#undef QOLYESTER_ENABLE_DEBUG
+
+/* Use external networks */
+#undef QOLYESTER_ENABLE_HNA
+
+/* Link Hysteresis feature */
+#undef QOLYESTER_ENABLE_LINKHYS
+
+/* Use multiple interfaces */
+#undef QOLYESTER_ENABLE_MID
+
+/* Use MPR redundancy */
+#undef QOLYESTER_ENABLE_MPRRED
+
+/* Use numerical prefix in HNA */
+#undef QOLYESTER_ENABLE_NUMPREFIX
+
+/* Use TC redundancy */
+#undef QOLYESTER_ENABLE_TCRED
+
+/* Use virtual interfaces */
+#undef QOLYESTER_ENABLE_VIRTUAL
+
+/* INET family */
+#undef QOLYESTER_FAMILY_INET
+
+/* HELLO interval grace */
+#undef QOLYESTER_HELLO_GRACE
+
+/* HELLO emission interval */
+#undef QOLYESTER_HELLO_INTERVAL
+
+/* HNA holding time */
+#undef QOLYESTER_HNA_HOLD_TIME
+
+/* HNA emission interval */
+#undef QOLYESTER_HNA_INTERVAL
+
+/* link hysteresis scaling */
+#undef QOLYESTER_HYST_SCALING
+
+/* link hysteresis high threshold */
+#undef QOLYESTER_HYST_THRESHOLD_HIGH
+
+/* link hysteresis low threshold */
+#undef QOLYESTER_HYST_THRESHOLD_LOW
+
+/* Use link-local IPv6 multicast address in any case */
+#undef QOLYESTER_LL_MCAST
+
+/* Maximum jitter time */
+#undef QOLYESTER_MAX_JITTER_TIME
+
+/* MID holding time */
+#undef QOLYESTER_MID_HOLD_TIME
+
+/* MID emission interval */
+#undef QOLYESTER_MID_INTERVAL
+
+/* Default MPR coverage */
+#undef QOLYESTER_MPR_DEFAULT_COVERAGE
+
+/* Neighbor holding time */
+#undef QOLYESTER_NEIGHB_HOLD_TIME
+
+/* Default output queue size per interface */
+#undef QOLYESTER_QUEUE_SIZE
+
+/* Information refresh interval */
+#undef QOLYESTER_REFRESH_INTERVAL
+
+/* Qolyester snapshot */
+#undef QOLYESTER_SNAPSHOT_VERSION
+
+/* Default TC redundancy */
+#undef QOLYESTER_TC_DEFAULT_REDUNDANCY
+
+/* TC emission interval */
+#undef QOLYESTER_TC_INTERVAL
+
+/* Topology holding time */
+#undef QOLYESTER_TOP_HOLD_TIME
+
+/* Define as the return type of signal handlers (`int' or `void'). */
+#undef RETSIGTYPE
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
+#undef TIME_WITH_SYS_TIME
+
+/* Define to 1 if your <sys/time.h> declares `struct tm'. */
+#undef TM_IN_SYS_TIME
+
+/* Version number of package */
+#undef VERSION
+
+/* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
+   `char[]'. */
+#undef YYTEXT_POINTER
+
+/* Define to empty if `const' does not conform to ANSI C. */
+#undef const
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#undef inline
+#endif
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#undef size_t
+
+# ifdef QOLYESTER_ENABLE_DEBUG
+#  define DEBUG
+# else
+#  define NDEBUG
+# endif
+
+# if defined __GNUC__ && __GNUC__ >= 3
+#  include <ext/hash_set>
+#  include <ext/hash_map>
+#  if __GNUC__ >= 4 || __GNUC_MINOR__ >= 2
+namespace std {
+  using ::__gnu_cxx::hash;
+  using ::__gnu_cxx::hash_set;
+  using ::__gnu_cxx::hash_multiset;
+  using ::__gnu_cxx::hash_map;
+  using ::__gnu_cxx::hash_multimap;
+}
+#  endif
+# else
+#  include <hash_set>
+#  include <hash_map>
+# endif
+
+# define MAX(a, b) (((a) < (b)) ? (b) : (a))
+
+# if QOLYESTER_FAMILY_INET == 6
+#  define QOLYESTER_TWO_SOCKETS
+# elif QOLYESTER_FAMILY_INET == 4
+#  define QOLYESTER_TWO_SOCKETS
+# endif
+
+# if QOLYESTER_FAMILY_INET == 6
+#  ifdef QOLYESTER_ALL_ROUTERS
+#   define QOLYESTER_LINKLOCAL_MCAST	"ff02::2"
+#   define QOLYESTER_SITELOCAL_MCAST	"ff05::2"
+#   define QOLYESTER_GLOBAL_MCAST	"ff0e::2"
+#  else
+#   define QOLYESTER_LINKLOCAL_MCAST	"ff02::1"
+#   define QOLYESTER_SITELOCAL_MCAST	"ff05::1"
+#   define QOLYESTER_GLOBAL_MCAST	"ff0e::1"
+#  endif
+# endif
+
+# if !defined HAVE_ROUNDF || !defined HAVE_FLOORF || !defined HAVE_CEILF
+
+#  include <cmath>
+
+#  ifndef HAVE_FLOORF
+inline
+float
+floorf(float f)
+{
+  return (float) floor(f);
+}
+#  endif
+
+#  ifndef HAVE_CEILF
+inline
+float
+ceilf(float f)
+{
+  return (float) ceil(f);
+}
+#  endif
+
+#  ifndef HAVE_ROUNDF
+inline
+float
+roundf(float f)
+{
+  if (f >= 0)
+    return floorf(f + .5f);
+  return ceilf(f - .5f);
+}
+#  endif
+
+# endif
+
+#endif // !QOLYESTER_CONFIG_HH

@@ -1,0 +1,3 @@
+.TP
+\fB--mid-interval=MSEC\fR
+Set the MID emission interval to \fBMSEC\fR milliseconds.

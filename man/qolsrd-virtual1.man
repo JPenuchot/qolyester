@@ -1,0 +1,4 @@
+.TP
+\fB--switch-sockfile=FILENAME\fR
+Set the filename to be used for communication with the Qolyester
+switch daemon.

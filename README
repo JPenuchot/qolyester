@@ -1,0 +1,71 @@
+Qolyester version 0.2
+
+  Qolyester is an implementation of the OLSR protocol for the linux platform.
+  It is fully compliant with RFC 3626.
+
+  By default, it has support for IPv6 addresses but this can be changed at
+  compile time by givin the --enable-ipv4 option to the configure script (see
+  INSTALL for more information about compilation and installation of
+  Qolyester).
+
+* Prerequisites
+
+  A standard-compliant C++ compiler.  GCC-2.9x won't compile this code
+  and no good solution had been found yet.  Use at least GCC-3.0 and
+  see the BUGS file for details.
+
+  For the moment, Qolyester is designed to be run on Linux 2.4 and 2.6
+  kernels, as it uses the Netlink interface for interface information
+  retrieval and route management.  Support for BSDish unices and eventually
+  Windows platform is planned though not a priority.
+
+  You are better off using a USAGI IPv6 stack (see http://www.linux-ipv6.org)
+  if you want IPv6 support (which is most probably the case) since it is
+  more advanced than IPv6 support in vanilla kernels.
+
+  For IPv6, the address on each used interface has to be set up manually
+  (e.g. by using the ip command).  If the interface has more than one
+  address, one is chosen using a sensible scheme (that may change over
+  time...).  You can specify what address to use (it must be set on the
+  interface beforehand, though), read the manual page for details.
+
+  IMPORTANT: to avoid problems, remove any additional route regarding the
+  interface(s) that Qolyester is to be using to avoid any conflict during
+  routing table management.  Nevertheless it is important for IPv6 that
+  routes for multicast destinations (ff00::/8) are left as they are, otherwise
+  the daemon may be unable to send control messages.
+
+  VERY IMPORTANT: interfaces MUST have a global address with full prefix
+  (32 for IPv4 and 128 for IPv6).  For IPv6, interfaces also MUST have a
+  link-local address, otherwise they won't be able to forward packets
+  properly.
+
+  For IEEE 802.11* interfaces (WiFi), specific parameters have to be
+  set beforehand by the user (Channel, SSID, WEP key, etc).  It is
+  also STRONGLY advised to set some sensible RTS/CTS threshold, in
+  order to prevent broadcast frames containing control messages from
+  colliding with unicast frames (in doubt, set it to the smallest
+  non-zero value possible).
+
+* Usage
+
+  The --help option spits out a fairly extensive usage description.  The -i
+  option specifies the network interfaces to use and is mandatory.
+
+  The various --dump-... options are used mainly for debugging purposes.
+
+  See the man page qolsrd(8) for extensive usage information.
+
+* Virtual interface mode
+
+  If you configure the sources with --enable-virtual, you get an
+  experimental version of the project that allows running many instances
+  on the same host, whether there are network interfaces or not.  This
+  is provided for testing purposes.
+
+* Internals
+
+  For those who are curious, take a look at the DEVELOPERS file in the
+  root of the distribution before going anyway further.
+
+For any questions, remarks or bug reports, please send email to qolsr@lri.fr .

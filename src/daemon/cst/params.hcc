@@ -1,0 +1,72 @@
+// -*- mode: c++; -*-
+// Copyright (C) 2003-2006 Laboratoire de Recherche en Informatique
+
+// This file is part of Qolyester.
+
+// Qolyester is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+
+// Qolyester is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA  02110-1301, USA.
+
+#ifndef QOLYESTER_DAEMON_CST_PARAMS_HCC
+# define QOLYESTER_DAEMON_CST_PARAMS_HCC 1
+
+# include "params.hh"
+
+namespace olsr {
+
+  namespace cst {
+
+# ifdef QOLYESTER_ENABLE_LINKHYS
+    float	hyst_threshold_high = def_hyst_threshold_high;
+    float	hyst_threshold_low  = def_hyst_threshold_low;
+    float	hyst_scaling        = def_hyst_scaling;
+# endif
+
+    timeval_t	hello_interval   = def_hello_interval;
+    timeval_t	refresh_interval = def_refresh_interval;
+    timeval_t	tc_interval      = def_tc_interval;
+
+    float	hello_grace      = def_hello_grace;
+
+# ifdef QOLYESTER_ENABLE_MID
+    timeval_t	mid_interval     = def_mid_interval;
+    timeval_t	mid_hold_time    = def_mid_hold_time;
+# endif
+
+# ifdef QOLYESTER_ENABLE_HNA
+    timeval_t	hna_interval     = def_hna_interval;
+    timeval_t	hna_hold_time    = def_hna_hold_time;
+# endif
+
+    timeval_t	neighb_hold_time = def_neighb_hold_time;
+    timeval_t	top_hold_time    = def_top_hold_time;
+    timeval_t	dup_hold_time    = def_dup_hold_time;
+
+    timeval_t	maxjitter        = def_maxjitter;
+    timeval_t	dump_interval    = def_dump_interval;
+
+    unsigned	queue_size       = def_queue_size;
+
+  } // namespace cst
+
+  TCRedundancy	tc_redundancy    = def_tc_redundancy;
+  unsigned	willingness      = def_willingness;
+
+# ifdef QOLYESTER_ENABLE_MPRRED
+  unsigned	mprcoverage      = def_mprcoverage;
+# endif
+
+} // namespace olsr
+
+#endif // QOLYESTER_DAEMON_CST_PARAMS_HCC
